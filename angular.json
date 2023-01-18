@@ -28,7 +28,10 @@
               "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+							"node_modules/@popperjs/core/dist/umd/popper.js",
+   						"node_modules/bootstrap/dist/js/bootstrap.js"
+						]
           },
           "configurations": {
             "production": {
