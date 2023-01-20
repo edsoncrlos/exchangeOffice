@@ -1,0 +1,30 @@
+header {
+	font-size: 1.6rem;
+}
+
+ul {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 1.6rem;
+}
+
+mat-icon {
+	color: var(--bs-nav-link-color);
+}
+
+.navbar-toggler {
+	border: 2px solid #dedede;
+	padding: 0.8rem;
+}
+
+.navbar-toggler:focus {
+	box-shadow: 0px 0px 2px 1px;
+}
+
+@media screen and (max-width: 768px) {
+	.container-fluid {
+		justify-content: flex-end;
+		align-items: center;
+	}
+}
