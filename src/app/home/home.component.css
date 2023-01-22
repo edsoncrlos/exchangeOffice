@@ -1,0 +1,14 @@
+main {
+	height: 100%;
+}
+
+h1 {
+	font-size: large;
+	margin-top: 25vh;
+}
+
+p {
+	font-size: medium;
+	text-align: center;
+}
+
