@@ -3,12 +3,12 @@ main {
 }
 
 h1 {
-	font-size: large;
+	font-size: var(--font-size-lg);
 	margin-top: 25vh;
 }
 
 p {
-	font-size: medium;
+	font-size: var(--font-size-md);
 	text-align: center;
 }
 

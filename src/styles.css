@@ -1,5 +1,14 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
+:root {
+	--font-size-xxlg: clamp(32px, 5vw + 0.1em, 72px);
+	--font-size-xlg: clamp(24px, 4vw + 0.1em, 64px);
+	--font-size-lg: clamp(20px, 4vw + 0.1em, 36px);
+	--font-size-md: clamp(16px, 3.5vw + 0.1em, 26px);
+	--font-size-sm: clamp(13px, 3vw + 0.1em, 18px);
+	--font-size-xsm: clamp(10px, 3vw + 0.1em, 16px);
+}
+
 html, body {
 	height: 100%;
 	font-size: 62.5%;
@@ -15,4 +24,3 @@ app-root {
 	display: grid;
 	grid-template-rows: max-content 1fr;
 }
-
