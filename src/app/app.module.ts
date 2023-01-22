@@ -13,13 +13,13 @@ import { MenuComponent } from './menu/menu.component';
   declarations: [
     AppComponent,
     MenuComponent,
-		HomeComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-		MatIconModule
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
