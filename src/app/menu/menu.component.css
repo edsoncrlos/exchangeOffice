@@ -1,5 +1,6 @@
 header {
 	font-size: var(--font-size-md);
+	background-color: #0BAA5B;
 }
 
 ul {
@@ -7,25 +8,33 @@ ul {
 	display: flex;
 	justify-content: center;
 	gap: 1.6rem;
+	color: #fff;
 }
 
-mat-icon {
-	color: var(--bs-nav-link-color);
+.nav-link {
+	width: max-content;
 }
 
-.nav-item {
+.nav-link:hover,
+.link-active {
+	color: #1c1c62;
+}
+
+.nav-link {
 	display: flex;
 	align-items: center;
 	gap: 0.4rem;
+
+	color: inherit;
 }
 
 .navbar-toggler {
-	border: 2px solid #dedede;
+	border: 1.5px solid #fff;
 	padding: 0.8rem;
 }
 
 .navbar-toggler:focus {
-	box-shadow: 0px 0px 2px 1px;
+	box-shadow: 0px 0px 2px 3px;
 }
 
 @media screen and (max-width: 992px) {
