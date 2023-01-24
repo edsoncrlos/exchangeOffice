@@ -16,7 +16,7 @@ ul {
 }
 
 .nav-link:hover,
-.link-active {
+.nav-link.active {
 	color: #1c1c62;
 }
 
