@@ -9,14 +9,15 @@
 
 			<div class="collapse navbar-collapse" id="collapsibleNavId">
 				<ul class="navbar-nav me-auto mt-2 mt-lg-0">
+
 					<li class="nav-item">
-						<a class="nav-link" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+						<a class="nav-link" [ariaCurrentWhenActive]="'page'" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
 							<span class="nav-content">Home</span>
 							<mat-icon class="nav-content" aria-hidden="false" aria-label="Ícone de uma casa" fontIcon="home"></mat-icon>
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" routerLink="coin-listing" routerLinkActive="active">
+						<a class="nav-link" [ariaCurrentWhenActive]="'page'" routerLink="coin-listing" routerLinkActive="active">
 							<span class="nav-content">Listar Moedas</span>
 							<mat-icon class="nav-content" aria-hidden="false" aria-label="Cifrão" fontIcon="attach_money"></mat-icon>
 						</a>
@@ -33,6 +34,7 @@
 							<mat-icon class="nav-content" aria-hidden="false" aria-label="Ponteiros de um relógio dentro de uma seta no sentido anti-horário" fontIcon="history"></mat-icon>
 						</a>
 					</li>
+
 				</ul>
 			</div>
 
