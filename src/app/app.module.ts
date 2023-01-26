@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
@@ -21,6 +22,7 @@ import { CoinListingComponent } from './coin-listing/coin-listing.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CoreModule,
     SharedModule,
   ],
