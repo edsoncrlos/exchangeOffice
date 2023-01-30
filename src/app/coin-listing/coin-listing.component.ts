@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { map, take } from 'rxjs';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -13,41 +13,48 @@ import { Coin } from '../core/exchange-rate-api.interfaces';
   templateUrl: './coin-listing.component.html',
   styleUrls: ['./coin-listing.component.css']
 })
-export class CoinListingComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CoinListingComponent implements OnInit {
   coins: Coin[] = [];
-  response!: Subscription;
 
   displayColumns: string[] = ['code','description'];
   dataSource!: MatTableDataSource<Coin>;
-  filter: string = '';
+  filter = '';
   pageSize = 5;
 
   constructor (
     private exchangeRate: ExchangeRateService
   ) { }
 
-
   ngOnInit(): void {
-  this.response = this.exchangeRate.getCoins()
-    .subscribe((response) => {
-      if (response.success === true) {
-        this.coins = Object.values(response.symbols)
-        this.dataSource = new MatTableDataSource<Coin>(this.coins);
-      }
-    })
+    const self = this;
+    this.exchangeRate.getCoins()
+      .pipe(
+        take(1),
+        map(response => Object.values(response.symbols))
+      ).subscribe({
+        next(response) {
+          self.coins = response as Coin[];
+        },
+        complete() {
+          self.dataSource = new MatTableDataSource<Coin>(self.coins);
+        }
+      });
   }
 
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator;
+  private paginator!: MatPaginator;
+  private sort!: MatSort;
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    if (ms != undefined) {
+      this.sort = ms;
       this.dataSource.sort = this.sort;
-    }, 150)
+    }
   }
 
-  ngOnDestroy() {
-    this.response.unsubscribe();
+  @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
+    if (mp != undefined) {
+      this.paginator = mp;
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   handlePageEvent() {
