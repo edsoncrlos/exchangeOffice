@@ -5,5 +5,14 @@ export interface Coin {
 
 export interface ResponseSymbols {
   success: boolean,
-  symbols: Object
+  symbols: { }
+}
+
+export interface ResponseConvert {
+  success: boolean,
+  info: {
+    rate: number
+  },
+  historical: boolean,
+  result: number
 }

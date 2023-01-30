@@ -17,12 +17,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CoinListingComponent } from './coin-listing/coin-listing.component';
+import { CurrencyConverterComponent } from './currency-converter/currency-converter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CoinListingComponent
+    CoinListingComponent,
+    CurrencyConverterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,89 @@
+<form #form="ngForm" (ngSubmit)="onSubmit()">
+  <div class="m-3">
+    <label for="originCoin" class="form-label">Moeda de origem</label>
+    <input type="text" class="form-control" id="originCoin" placeholder="Brazilian Real - BRL"
+      name="originCoin"
+      aria-label="Moeda de origem"
+      required
+      [class.is-invalid]="!originCoin.valid && originCoin.touched"
+      [(ngModel)]="coinsConverterForm.originCoin"
+      [matAutocomplete]="autoCompleteOriginCoin"
+      #originCoin="ngModel"
+    >
+    <div *ngIf="!originCoin.valid && originCoin.touched"
+      class="alert alert-danger">
+      Esse campo é obrigatório
+    </div>
+  </div>
+
+  <div class="m-3">
+    <label for="destinationCoin" class="form-label">Moeda de destino</label>
+    <input type="text" class="form-control" id="destinationCoin" placeholder="United States Dollar - USD"
+      name="destinationCoin"
+      aria-label="Moeda de destino"
+      required
+      [class.is-invalid]="!destinationCoin.valid && destinationCoin.touched"
+      [(ngModel)]="coinsConverterForm.destinationCoin"
+      [matAutocomplete]="autoCompleteDestinationCoin"
+      #destinationCoin="ngModel"
+    >
+    <div *ngIf="!destinationCoin.valid && destinationCoin.touched"
+      class="alert alert-danger">
+      Esse campo é obrigatório
+    </div>
+  </div>
+
+  <div class="m-3">
+    <label for="amount" class="form-label">Quantidade</label>
+    <input type="number" class="form-control" id="amount"
+    aria-label="Number" name="amount"
+    min="0.1"
+    [(ngModel)]="coinsConverterForm.amount"
+    #amountInput="ngModel"
+    [class.is-invalid]="!amountInput.valid && amountInput.touched"
+    required
+    >
+    <div *ngIf="!amountInput.valid && amountInput.touched"
+      class="alert alert-danger">
+        <p>
+          {{ messageErrorAmount() }}
+        </p>
+    </div>
+  </div>
+
+  <mat-autocomplete #autoCompleteOriginCoin="matAutocomplete">
+    <mat-option *ngFor="let option of applyFilter(coinsConverterForm.originCoin)" [value]="option.description" >
+      {{ option.description }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <mat-autocomplete #autoCompleteDestinationCoin="matAutocomplete">
+    <mat-option *ngFor="let option of applyFilter(coinsConverterForm.destinationCoin)" [value]="option.description" >
+      {{ option.description }}
+    </mat-option>
+  </mat-autocomplete>
+
+  <button type="submit" class="ms-3 btn btn-primary"
+  [disabled]="!form.valid">Calcular conversão</button>
+</form>
+
+<div *ngIf="isCodesIncorrect" class="alert alert-danger m-3">
+  Os códigos das moedas estão incorretos
+</div>
+
+<div *ngIf="showResult" class="card m-3">
+  <div *ngIf="conversion$ | async as conversion" class="card-body conversion m-3">
+    <h2 class="card-title">Conversão</h2>
+    <p class="badge bg-primary">
+      {{ amount }} {{ originCode }}
+    </p>
+    <p>equivalem a</p>
+    <p class="badge bg-primary">{{ conversion.result }} {{ destinationCode }}</p>
+    <p>
+      Taxa de conversão:
+      <span class="badge bg-primary">{{ conversion.info.rate }}</span>
+    </p>
+    <button class="btn btn-warning" (click)="showResult = false">Fechar</button>
+  </div>
+</div>
+
