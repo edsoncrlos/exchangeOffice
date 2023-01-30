@@ -58,9 +58,13 @@ export class CoinListingComponent implements OnInit {
   }
 
   handlePageEvent() {
-    if (this.pageSize && this.pageSize >  0 && this.pageSize < this.coins.length) {
-      this.paginator._changePageSize(this.pageSize);
+    if (this.pageSize > this.coins.length) {
+      this.pageSize = this.coins.length;
     }
+    if (!this.pageSize || this.pageSize <= 0) {
+      this.pageSize = 1;
+    }
+    this.paginator._changePageSize(this.pageSize);
   }
 
   applyfilter() {
