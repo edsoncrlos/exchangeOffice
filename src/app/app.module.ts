@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +33,7 @@ import { CoinListingComponent } from './coin-listing/coin-listing.component';
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
