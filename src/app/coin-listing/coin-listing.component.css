@@ -1,0 +1,37 @@
+.paginator {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  align-items: center;
+}
+
+input[type="search"] {
+  font-size: var(--font-size-md);
+  width: min(50vw, 400px);
+  background-color: #efffff;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  width: max-content;
+}
+
+.input-group input {
+  width: 4.8rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
