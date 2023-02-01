@@ -49,11 +49,11 @@ export class CoinConverterComponent implements OnInit {
   }
 
   applyFilter(filter: string) {
-    if (filter.trim() === '' && this.codeAndDescriptionCoin.length === 0) {
+    filter = filter.trim().toUpperCase();
+    if (filter === '' && this.codeAndDescriptionCoin.length === 0) {
       return this.codeAndDescriptionCoin;
     }
 
-    filter = filter.toUpperCase();
     return this.codeAndDescriptionCoin.filter(coin => coin.description.toUpperCase().indexOf(filter) != -1);
   }
 
