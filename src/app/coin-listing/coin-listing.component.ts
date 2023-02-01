@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort} from '@angular/material/sort';
 
-import { ExchangeRateService } from '../core/exchange-rate.service';
+import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
 import { Coin } from '../core/exchange-rate-api.interfaces';
 
 @Component({
@@ -22,7 +22,7 @@ export class CoinListingComponent implements OnInit {
   pageSize = 5;
 
   constructor (
-    private exchangeRate: ExchangeRateService
+    private exchangeRate: ExchangeRateApiService
   ) { }
 
   ngOnInit(): void {

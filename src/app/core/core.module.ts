@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ExchangeRateService } from './exchange-rate.service';
+import { ExchangeRateApiService } from './exchange-rate-api.service';
 
 @NgModule({
   declarations: [],
@@ -9,7 +9,7 @@ import { ExchangeRateService } from './exchange-rate.service';
     CommonModule
   ],
   providers: [
-    ExchangeRateService
+    ExchangeRateApiService
   ]
 })
 export class CoreModule { }

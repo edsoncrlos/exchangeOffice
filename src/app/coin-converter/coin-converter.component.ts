@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, take } from 'rxjs';
 import { Coin, ResponseConvert } from '../core/exchange-rate-api.interfaces';
 
-import { ExchangeRateService } from '../core/exchange-rate.service';
-import { CodeAndDescription, CoinsConvertForm } from './currency-converter.interfaces';
+import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
+import { CodeAndDescription, CoinsConvertForm } from './coin-converter.interfaces';
 
 @Component({
-  selector: 'app-currency-converter',
-  templateUrl: './currency-converter.component.html',
-  styleUrls: ['./currency-converter.component.css']
+  selector: 'app-coin-converter',
+  templateUrl: './coin-converter.component.html',
+  styleUrls: ['./coin-converter.component.css']
 })
-export class CurrencyConverterComponent implements OnInit {
+export class CoinConverterComponent implements OnInit {
   conversion$!: Observable<ResponseConvert>;
 
   codeAndDescriptionCoin: CodeAndDescription[] = [];
@@ -27,7 +27,7 @@ export class CurrencyConverterComponent implements OnInit {
   isCodesIncorrect = false;
 
   constructor (
-    private exchangeRate: ExchangeRateService
+    private exchangeRate: ExchangeRateApiService
   ) { }
 
   ngOnInit(): void {

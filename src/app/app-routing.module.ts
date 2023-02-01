@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { CoinListingComponent } from './coin-listing/coin-listing.component';
-import { CurrencyConverterComponent } from './currency-converter/currency-converter.component';
+import { CoinConverterComponent } from './coin-converter/coin-converter.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'coin-listing', component: CoinListingComponent},
-  { path: 'currency-converter', component: CurrencyConverterComponent}
+  { path: 'coin-converter', component: CoinConverterComponent}
 ];
 
 @NgModule({
