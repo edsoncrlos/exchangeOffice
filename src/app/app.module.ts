@@ -18,13 +18,15 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CoinListingComponent } from './coin-listing/coin-listing.component';
 import { CoinConverterComponent } from './coin-converter/coin-converter.component';
+import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CoinListingComponent,
-    CoinConverterComponent
+    CoinConverterComponent,
+    ConversionHistoryComponent
   ],
   imports: [
     BrowserModule,
