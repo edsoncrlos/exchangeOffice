@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, take } from 'rxjs';
+
+import { Historic } from '../conversion-history/conversion-history.interfaces';
 import { Coin, ResponseConvert } from '../core/exchange-rate-api.interfaces';
 
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
+import { SessionStorageService } from '../core/session-storage.service';
 import { CodeAndDescription, CoinsConvertForm } from './coin-converter.interfaces';
 
 @Component({
@@ -27,7 +30,8 @@ export class CoinConverterComponent implements OnInit {
   isCodesIncorrect = false;
 
   constructor (
-    private exchangeRate: ExchangeRateApiService
+    private exchangeRate: ExchangeRateApiService,
+    private sessionStorage: SessionStorageService<Historic>
   ) { }
 
   ngOnInit(): void {
@@ -116,5 +120,25 @@ export class CoinConverterComponent implements OnInit {
   convertCoins() {
     this.conversion$ = this.exchangeRate.getConversionCoins(this.originCode, this.destinationCode, this.amount);
     this.showResult = true;
+    this.addConversion();
+  }
+
+  addConversion() {
+    this.conversion$.pipe(
+      take(1)
+    ).subscribe((conversion) => {
+      const hourAndMinutes =  Date().match(/\d\d:\d\d/)?.[0] as string;
+
+      const historic: Historic = {
+        date: conversion.date,
+        hourAndMinutes: hourAndMinutes,
+        amount: conversion.query.amount,
+        originCoin: conversion.query.from,
+        destinationCoin: conversion.query.to,
+        result: conversion.result,
+        rate: conversion.info.rate
+      }
+      this.sessionStorage.addItem('historic', historic)
+    })
   }
 }
