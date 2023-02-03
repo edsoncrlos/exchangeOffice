@@ -1,1 +1,52 @@
-<p>conversion-history works!</p>
+
+<div class="historic" *ngIf="historic.length > 0">
+  <div class="wrap">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Data </th>
+        <td mat-cell *matCellDef="let historic"> {{ historic.date | date:'dd/MM/yyyy' }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="hourAndMinutes">
+        <th mat-header-cell *matHeaderCellDef
+          mat-sort-header sortActionDescription="Sort by hourAndMinutes"
+        > Hora </th>
+        <td mat-cell *matCellDef="let historic">{{ historic.hourAndMinutes }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef
+          mat-sort-header sortActionDescription="Sort by amount"
+        > Quantidade </th>
+        <td mat-cell *matCellDef="let historic">{{ historic.amount }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="originCoin">
+        <th mat-header-cell *matHeaderCellDef> Moeda de origem </th>
+        <td mat-cell *matCellDef="let historic"> {{ historic.originCoin }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="destinationCoin">
+        <th mat-header-cell *matHeaderCellDef> Moeda de destino </th>
+        <td mat-cell *matCellDef="let historic"> {{ historic.destinationCoin }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef
+        mat-sort-header sortActionDescription="Sort by result"
+        > Resultado </th>
+        <td mat-cell *matCellDef="let historic"> {{ historic.result }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rate">
+        <th mat-header-cell *matHeaderCellDef> Taxa </th>
+        <td mat-cell *matCellDef="let historic"> {{ historic.rate }} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+    </table>
+  </div>
+</div>
+
+<p class="no-historic" *ngIf="!historic.length">Você ainda não realizou nenhuma conversão.  </p>

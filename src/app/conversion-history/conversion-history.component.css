@@ -1,0 +1,12 @@
+.wrap {
+  overflow-x: auto;
+}
+
+th {
+  white-space: nowrap;
+}
+
+.no-historic {
+  margin-top: 2rem;
+  text-align: center;
+}
