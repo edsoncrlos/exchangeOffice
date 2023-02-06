@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 import { ResponseConvert, ResponseSymbols } from './exchange-rate-api.interfaces';
 
@@ -8,7 +9,7 @@ import { ResponseConvert, ResponseSymbols } from './exchange-rate-api.interfaces
 })
 export class ExchangeRateApiService {
 
-  private readonly API = 'https://api.exchangerate.host/';
+  private readonly API = environment.API_URL;
 
   constructor(
     private http: HttpClient
