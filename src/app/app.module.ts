@@ -1,24 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
+import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './app-routing.module';
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { CoinListingComponent } from './coin-listing/coin-listing.component';
 import { CoinConverterComponent } from './coin-converter/coin-converter.component';
+import { CoinListingComponent } from './coin-listing/coin-listing.component';
 import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -31,13 +24,7 @@ import { ConversionHistoryComponent } from './conversion-history/conversion-hist
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatFormFieldModule,
-    MatAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
     CoreModule,

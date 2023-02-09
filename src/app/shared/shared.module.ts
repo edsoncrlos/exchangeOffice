@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { MatIconModule } from '@angular/material/icon';
+import { AppMaterialModule } from './app-material/app-material.module';
 
 import { MenuComponent } from './menu/menu.component';
 
@@ -12,11 +12,12 @@ import { MenuComponent } from './menu/menu.component';
     MenuComponent
   ],
   imports: [
+    AppMaterialModule,
     CommonModule,
-    MatIconModule,
     RouterModule
   ],
   exports: [
+    AppMaterialModule,
     MenuComponent
   ]
 })
