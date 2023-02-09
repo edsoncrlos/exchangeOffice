@@ -12,17 +12,16 @@ import { Historic } from './conversion-history.interfaces';
   styleUrls: ['./conversion-history.component.css']
 })
 export class ConversionHistoryComponent implements OnInit, AfterViewInit {
-  historic: Historic[] = [];
   displayColumns: string[] = ['date', 'hourAndMinutes', 'amount', 'originCoin', 'destinationCoin', 'result', 'rate'];
   dataSource!: MatTableDataSource<Historic>;
 
   constructor(
     private sessionStorage: SessionStorageService<Historic>
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.historic = this.sessionStorage.getItem('historic');
-    this.dataSource = new MatTableDataSource<Historic>(this.historic);
+    const historic: Historic[] = this.sessionStorage.getItem('historic');
+    this.dataSource = new MatTableDataSource<Historic>(historic);
   }
 
   @ViewChild(MatSort) sort!: MatSort;

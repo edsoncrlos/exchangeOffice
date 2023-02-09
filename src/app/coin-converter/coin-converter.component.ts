@@ -95,7 +95,6 @@ export class CoinConverterComponent implements OnInit {
   }
 
   messageErrorAmount(): string {
-    console.log(this.coinsConverterForm.amount);
     if (this.coinsConverterForm.amount != null) {
       if (this.coinsConverterForm.amount <= 0) {
         return 'O valor deve ser maior que zero';
@@ -127,18 +126,42 @@ export class CoinConverterComponent implements OnInit {
     this.conversion$.pipe(
       take(1)
     ).subscribe((conversion) => {
-      const hourAndMinutes =  Date().match(/\d\d:\d\d/)?.[0] as string;
+      const tenThousand = 10000;
+      const codeDollar = 'USD';
+      let isGreaterThanTenThousandDollars = false;
 
-      const historic: Historic = {
-        date: conversion.date,
-        hourAndMinutes: hourAndMinutes,
-        amount: conversion.query.amount,
-        originCoin: conversion.query.from,
-        destinationCoin: conversion.query.to,
-        result: conversion.result,
-        rate: conversion.info.rate
+      if (conversion.query.to === codeDollar && conversion.result > tenThousand) {
+        isGreaterThanTenThousandDollars = true;
+        this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
+      } else {
+        this.exchangeRate.getConversionCoins(conversion.query.to, codeDollar, conversion.result)
+        .pipe(
+          take(1)
+        )
+        .subscribe((response) => {
+          if (response.result > tenThousand) {
+            isGreaterThanTenThousandDollars = true;
+          }
+          this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
+        })
       }
-      this.sessionStorage.addItem('historic', historic)
     })
+  }
+
+  addHistoricInSessionStorage(conversion: ResponseConvert, isGreaterThanTenThousandDollars: boolean) {
+    const hourAndMinutes =  Date().match(/\d\d:\d\d/)?.[0] as string;
+
+    const historic: Historic = {
+      date: conversion.date,
+      hourAndMinutes: hourAndMinutes,
+      amount: conversion.query.amount,
+      originCoin: conversion.query.from,
+      destinationCoin: conversion.query.to,
+      result: conversion.result,
+      rate: conversion.info.rate,
+      hasShowIcon: isGreaterThanTenThousandDollars
+    }
+
+    this.sessionStorage.addItem('historic', historic)
   }
 }

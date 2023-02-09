@@ -5,5 +5,6 @@ export interface Historic {
   originCoin: string,
   destinationCoin: string,
   result: number,
-  rate: number
+  rate: number,
+  hasShowIcon: boolean
 }
