@@ -19,7 +19,7 @@ export class ConversionHistoryComponent implements OnInit, AfterViewInit {
 
   constructor(
     private sessionStorage: SessionStorageService<Historic>,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
