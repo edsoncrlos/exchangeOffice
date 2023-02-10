@@ -20,4 +20,8 @@ export class SessionStorageService<T> {
     }
     return new Array<T>;
   }
+
+  setItem(key: string, array: T[]) {
+    sessionStorage.setItem(key, JSON.stringify(array));
+  }
 }

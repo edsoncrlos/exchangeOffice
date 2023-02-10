@@ -11,13 +11,18 @@ th {
   text-align: center;
 }
 
-mat-icon {
+.money-icon {
   color: #0BAA5B ;
 }
 
-.result {
+.container-icons {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
 }
