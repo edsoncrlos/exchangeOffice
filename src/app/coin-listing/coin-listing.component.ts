@@ -14,8 +14,6 @@ import { Coin } from '../core/exchange-rate-api.interfaces';
   styleUrls: ['./coin-listing.component.css']
 })
 export class CoinListingComponent implements OnInit {
-  coins: Coin[] = [];
-
   displayColumns: string[] = ['code','description'];
   dataSource!: MatTableDataSource<Coin>;
   filter = '';
@@ -33,10 +31,8 @@ export class CoinListingComponent implements OnInit {
         map(response => Object.values(response.symbols))
       ).subscribe({
         next(response) {
-          self.coins = response as Coin[];
-        },
-        complete() {
-          self.dataSource = new MatTableDataSource<Coin>(self.coins);
+          const coins = response as Coin[];
+          self.dataSource = new MatTableDataSource<Coin>(coins);
         }
       });
   }
@@ -58,12 +54,15 @@ export class CoinListingComponent implements OnInit {
   }
 
   handlePageEvent() {
-    if (this.pageSize > this.coins.length) {
-      this.pageSize = this.coins.length;
+    const coins: Coin[] = this.dataSource.data;
+
+    if (this.pageSize > coins.length) {
+      this.pageSize = coins.length;
     }
     if (!this.pageSize || this.pageSize <= 0) {
       this.pageSize = 1;
     }
+
     this.paginator._changePageSize(this.pageSize);
   }
 

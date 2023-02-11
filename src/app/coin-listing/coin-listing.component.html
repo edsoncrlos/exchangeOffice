@@ -1,4 +1,4 @@
-<div *ngIf="coins.length">
+<div *ngIf="dataSource?.data?.length! > 0">
 
   <form class="d-flex justify-content-end p-3" role="search">
     <input class="form-control pe-2" type="search" placeholder="Pesquisar" aria-label="Pesquisa" [(ngModel)]="filter" (ngModelChange)="applyfilter()" [ngModelOptions]="{standalone: true}">
