@@ -6,7 +6,8 @@ import { MatTableModule } from '@angular/material/table';
 
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
 import { CoinListingComponent } from './coin-listing.component';
-import { ExchangeRateServiceStumb, mockCoins, mockDisplayColumns } from './coin-listing.component.doubles';
+import { mockCoins, mockDisplayColumns } from './coin-listing.component.doubles';
+import { ExchangeRateServiceStumb } from '../core/exchange-rate-api.service.doubles';
 
 describe('CoinListingComponent', () => {
   let component: CoinListingComponent;
