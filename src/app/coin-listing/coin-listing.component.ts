@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { map, take } from 'rxjs';
+import { first } from 'rxjs';
 
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort} from '@angular/material/sort';
 
-import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
+import { DataRequestsService } from '../core/data-requests.service';
 import { Coin } from '../core/exchange-rate-api.interfaces';
 
 @Component({
@@ -20,21 +20,14 @@ export class CoinListingComponent implements OnInit {
   pageSize = 5;
 
   constructor (
-    private exchangeRate: ExchangeRateApiService
+    private dataRequests: DataRequestsService
   ) { }
 
   ngOnInit(): void {
-    const self = this;
-    this.exchangeRate.getCoins()
-      .pipe(
-        take(1),
-        map(response => Object.values(response.symbols))
-      ).subscribe({
-        next(response) {
-          const coins = response as Coin[];
-          self.dataSource = new MatTableDataSource<Coin>(coins);
-        }
-      });
+    this.dataRequests.getCoins().pipe(first())
+    .subscribe(
+      response => this.dataSource = new MatTableDataSource<Coin>(response)
+    )
   }
 
   private paginator!: MatPaginator;

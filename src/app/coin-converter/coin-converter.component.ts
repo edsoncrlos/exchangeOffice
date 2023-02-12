@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, take } from 'rxjs';
+import { first, Observable } from 'rxjs';
 
 import { Historic } from '../conversion-history/conversion-history.interfaces';
-import { Coin, ResponseConvert } from '../core/exchange-rate-api.interfaces';
+import { DataRequestsService } from '../core/data-requests.service';
+import { ResponseConvert } from '../core/exchange-rate-api.interfaces';
 
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
 import { SessionStorageService } from '../core/session-storage.service';
@@ -31,25 +32,20 @@ export class CoinConverterComponent implements OnInit {
 
   constructor (
     private exchangeRate: ExchangeRateApiService,
-    private sessionStorage: SessionStorageService<Historic>
+    private sessionStorage: SessionStorageService<Historic>,
+    private dataRequest: DataRequestsService
   ) { }
 
   ngOnInit(): void {
-    this.exchangeRate.getCoins()
-      .pipe(
-        take(1)
-      )
-      .subscribe((response) => {
-        if (response.success === true) {
-          const coins: Coin[] = Object.values(response.symbols);
-          this.codeAndDescriptionCoin = coins.map((c) => {
-            return {
-              code: c.code,
-              description: `${c.description} - ${c.code}`
-            };
-          });
-        }
-      });
+    this.dataRequest.getValidCoinsForConversion().pipe(first())
+    .subscribe((coins) => {
+      this.codeAndDescriptionCoin = coins.map((c) => {
+        return {
+          code: c.code,
+          description: `${c.description} - ${c.code}`
+        };
+      })
+    })
   }
 
   applyFilter(filter: string) {
@@ -124,7 +120,7 @@ export class CoinConverterComponent implements OnInit {
 
   addConversion() {
     this.conversion$.pipe(
-      take(1)
+      first()
     ).subscribe((conversion) => {
       const tenThousand = 10000;
       const codeDollar = 'USD';
@@ -136,7 +132,7 @@ export class CoinConverterComponent implements OnInit {
       } else {
         this.exchangeRate.getConversionCoins(conversion.query.to, codeDollar, conversion.result)
         .pipe(
-          take(1)
+          first()
         )
         .subscribe((response) => {
           if (response.result > tenThousand) {

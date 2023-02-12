@@ -22,3 +22,8 @@ export interface ResponseConvert {
   date: string,
   result: number
 }
+
+export interface ResponseLatest {
+  success: boolean,
+  rates: {}
+}
