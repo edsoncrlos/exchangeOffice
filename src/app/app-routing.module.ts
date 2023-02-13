@@ -6,7 +6,7 @@ import { CoinListingComponent } from './coin-listing/coin-listing.component';
 import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
 import { HomeComponent } from './home/home.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'coin-listing', component: CoinListingComponent},
   { path: 'coin-converter', component: CoinConverterComponent},
