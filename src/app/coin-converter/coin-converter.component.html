@@ -64,7 +64,7 @@
   </mat-autocomplete>
 
   <button type="submit" class="ms-3 btn btn-primary"
-  [disabled]="!form.valid">Calcular conversão</button>
+  [disabled]="!form.valid || isLoading">Calcular conversão</button>
 </form>
 
 <div *ngIf="isCodesIncorrect" class="alert alert-danger m-3">

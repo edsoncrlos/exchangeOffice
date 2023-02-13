@@ -29,6 +29,7 @@ export class CoinConverterComponent implements OnInit {
   amount = 0;
   showResult = false;
   isCodesIncorrect = false;
+  isLoading = false;
 
   constructor (
     private exchangeRate: ExchangeRateApiService,
@@ -106,6 +107,8 @@ export class CoinConverterComponent implements OnInit {
       this.amount = this.coinsConverterForm.amount;
       this.isCodesIncorrect = false;
 
+      this.isLoading = true;
+
       this.convertCoins();
     } else {
       this.isCodesIncorrect = true;
@@ -122,6 +125,8 @@ export class CoinConverterComponent implements OnInit {
     this.conversion$.pipe(
       first()
     ).subscribe((conversion) => {
+      this.isLoading = false;
+
       const tenThousand = 10000;
       const codeDollar = 'USD';
       let isGreaterThanTenThousandDollars = false;
