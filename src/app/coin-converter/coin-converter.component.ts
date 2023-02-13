@@ -39,14 +39,14 @@ export class CoinConverterComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataRequest.getValidCoinsForConversion().pipe(first())
-    .subscribe((coins) => {
-      this.codeAndDescriptionCoin = coins.map((c) => {
-        return {
-          code: c.code,
-          description: `${c.description} - ${c.code}`
-        };
-      })
-    })
+      .subscribe((coins) => {
+        this.codeAndDescriptionCoin = coins.map((c) => {
+          return {
+            code: c.code,
+            description: `${c.description} - ${c.code}`
+          };
+        });
+      });
   }
 
   applyFilter(filter: string) {
@@ -136,17 +136,17 @@ export class CoinConverterComponent implements OnInit {
         this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
       } else {
         this.exchangeRate.getConversionCoins(conversion.query.to, codeDollar, conversion.result)
-        .pipe(
-          first()
-        )
-        .subscribe((response) => {
-          if (response.result > tenThousand) {
-            isGreaterThanTenThousandDollars = true;
-          }
-          this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
-        })
+          .pipe(
+            first()
+          )
+          .subscribe((response) => {
+            if (response.result > tenThousand) {
+              isGreaterThanTenThousandDollars = true;
+            }
+            this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
+          });
       }
-    })
+    });
   }
 
   addHistoricInSessionStorage(conversion: ResponseConvert, isGreaterThanTenThousandDollars: boolean) {
@@ -161,8 +161,8 @@ export class CoinConverterComponent implements OnInit {
       result: conversion.result,
       rate: conversion.info.rate,
       hasShowIcon: isGreaterThanTenThousandDollars
-    }
+    };
 
-    this.sessionStorage.addItem('historic', historic)
+    this.sessionStorage.addItem('historic', historic);
   }
 }

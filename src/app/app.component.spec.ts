@@ -35,11 +35,11 @@ describe('AppComponent', () => {
 
   it('should render app-menu', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('app-menu')).toBeTruthy()
+    expect(compiled.querySelector('app-menu')).toBeTruthy();
   });
 
   it('should render router-outlet', () => {
     const compiled: HTMLElement = fixture.nativeElement;
     expect(compiled.querySelector('router-outlet')).toBeTruthy();
-  })
+  });
 });

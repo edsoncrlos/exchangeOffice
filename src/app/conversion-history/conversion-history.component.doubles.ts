@@ -1,5 +1,5 @@
-import { SessionStorageService } from "../core/session-storage.service";
-import { Historic } from "./conversion-history.interfaces";
+import { SessionStorageService } from '../core/session-storage.service';
+import { Historic } from './conversion-history.interfaces';
 
 export const mockHistoric: Historic[] = [
   {
@@ -32,7 +32,7 @@ export const mockHistoric: Historic[] = [
     rate: 0.200678,
     hasShowIcon: true
   }
-]
+];
 
 export const SessionStorageServiceStumb: Partial<SessionStorageService<Historic>> = {
   getItem(key: string) {
@@ -65,10 +65,10 @@ export const SessionStorageServiceStumb: Partial<SessionStorageService<Historic>
       result: 20.067793,
       rate: 0.200678,
       hasShowIcon: true
-    }]
+    }];
   },
 
   setItem(key: string, array: Historic[]) {
     return;
   }
-}
+};

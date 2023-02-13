@@ -39,15 +39,15 @@ export class ConversionHistoryComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(index: number) {
-    const dialogRef = this.dialog.open(DialogComponent)
+    const dialogRef = this.dialog.open(DialogComponent);
 
     dialogRef.afterClosed().subscribe(
       isDelete => {
         if (isDelete) {
-          this.deleteHistoric(index)
+          this.deleteHistoric(index);
         }
       }
-    )
+    );
   }
 
   deleteHistoric(index: number) {

@@ -36,9 +36,9 @@ describe('DataRequestsService', () => {
   it('should return ResponseSymbols from exchangeRate as Observable of coins', () => {
     const stumbValue = ExchangeRateServiceStumb?.getCoins?.()!;
     const returnStumb = new Observable<Coin[]>((coins) => {
-      coins.next(mockCoins)
-      coins.complete()
-    })
+      coins.next(mockCoins);
+      coins.complete();
+    });
 
     exchangeRateSpy.getCoins.and.returnValue(stumbValue);
     const returnService = service.getCoins();
@@ -54,7 +54,7 @@ describe('DataRequestsService', () => {
 
       expect(Returns.returnService)
         .withContext('service returned stub value')
-        .toEqual(Returns.returnStumb)
+        .toEqual(Returns.returnStumb);
     });
 
     expect(service.CoinSymbols).toBeDefined();
@@ -66,16 +66,16 @@ describe('DataRequestsService', () => {
 
     expect(exchangeRateSpy.getCoins.calls.mostRecent().returnValue)
       .toBe(stumbValue);
-  })
+  });
 
   it('should only return coins that exist getLatest', () => {
     const stumbValue = ExchangeRateServiceStumb?.getLatest?.()!;
     const stumbValueSymbols = ExchangeRateServiceStumb?.getCoins?.()!;
 
     const returnLatestStumb = new Observable<Coin[]>((coins) => {
-      coins.next(mockLatestCoins)
-      coins.complete()
-    })
+      coins.next(mockLatestCoins);
+      coins.complete();
+    });
 
     exchangeRateSpy.getCoins.and.returnValue(stumbValueSymbols);
     exchangeRateSpy.getLatest.and.returnValue(stumbValue);
@@ -91,7 +91,7 @@ describe('DataRequestsService', () => {
 
       expect(Returns.returnLatest)
         .withContext('service returned stub value')
-        .toEqual(Returns.returnLatestStumb)
+        .toEqual(Returns.returnLatestStumb);
     });
 
     expect(exchangeRateSpy.getLatest.calls.count())
@@ -101,11 +101,11 @@ describe('DataRequestsService', () => {
     expect(exchangeRateSpy.getLatest.calls.mostRecent().returnValue)
       .toBe(stumbValue);
 
-      expect(exchangeRateSpy.getCoins.calls.count())
+    expect(exchangeRateSpy.getCoins.calls.count())
       .withContext('Spy method was called once')
       .toBe(1);
 
     expect(exchangeRateSpy.getCoins.calls.mostRecent().returnValue)
       .toBe(stumbValueSymbols);
-  })
+  });
 });

@@ -25,9 +25,9 @@ export class CoinListingComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataRequests.getCoins().pipe(first())
-    .subscribe(
-      response => this.dataSource = new MatTableDataSource<Coin>(response)
-    )
+      .subscribe(
+        response => this.dataSource = new MatTableDataSource<Coin>(response)
+      );
   }
 
   private paginator!: MatPaginator;

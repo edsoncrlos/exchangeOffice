@@ -24,6 +24,6 @@ export class ExchangeRateApiService {
   }
 
   getLatest() {
-    return this.http.get<ResponseLatest>(`${this.API}latest`)
+    return this.http.get<ResponseLatest>(`${this.API}latest`);
   }
 }

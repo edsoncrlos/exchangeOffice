@@ -25,7 +25,7 @@ describe('CoinListingComponent', () => {
         { provide: ExchangeRateApiService, useValue: ExchangeRateServiceStumb }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CoinListingComponent);
     component = fixture.componentInstance;
@@ -39,7 +39,7 @@ describe('CoinListingComponent', () => {
   it('should check if displayColumns have value', () => {
     expect(component.displayColumns).toBeTruthy();
     expect(component.displayColumns.length).toBe(2);
-  })
+  });
 
   it('should render the table with received data', (done: DoneFn) => {
 
@@ -49,49 +49,49 @@ describe('CoinListingComponent', () => {
       const table: HTMLElement = fixture.nativeElement.querySelector('table');
       expect(table).toBeTruthy();
 
-      const columns: NodeList = table.querySelectorAll('thead th')
+      const columns: NodeList = table.querySelectorAll('thead th');
       columns.forEach((column, index) => {
         expect(column.textContent)
-        .withContext('Should render column')
-        .toContain(mockDisplayColumns[index])
-      })
+          .withContext('Should render column')
+          .toContain(mockDisplayColumns[index]);
+      });
 
-      const rows = table.querySelectorAll('tbody tr')
+      const rows = table.querySelectorAll('tbody tr');
       rows.forEach((rows, i) => {
         const cells = rows.querySelectorAll('td');
 
-        const [ code, description ] = [ cells[0], cells[1] ]
+        const [ code, description ] = [ cells[0], cells[1] ];
 
         expect(code.textContent).toContain(mockCoins[i].code);
-        expect(description.textContent).toContain(mockCoins[i].description)
-      })
+        expect(description.textContent).toContain(mockCoins[i].description);
+      });
 
       done();
-    })
+    });
   });
 
   it('should not reder table when array is empty', () => {
     component.dataSource.data = [];
 
-    fixture.detectChanges()
+    fixture.detectChanges();
     const table: HTMLElement = fixture.nativeElement;
 
-    expect(table.querySelector('table')).toBeNull()
+    expect(table.querySelector('table')).toBeNull();
   });
 
   it ('should modify pageSize to a valid value', () => {
     const pageSizeInput: HTMLInputElement = fixture.nativeElement.querySelector('#pageSize');
 
-    pageSizeInput.value = '3'
+    pageSizeInput.value = '3';
     pageSizeInput.dispatchEvent(new Event('input'));
-    expect(component.pageSize).toBe(mockCoins.length)
+    expect(component.pageSize).toBe(mockCoins.length);
 
-    pageSizeInput.value = '0'
-    pageSizeInput.dispatchEvent(new Event('input'))
-    expect(component.pageSize).toBe(1)
+    pageSizeInput.value = '0';
+    pageSizeInput.dispatchEvent(new Event('input'));
+    expect(component.pageSize).toBe(1);
 
-    pageSizeInput.value = ''
-    pageSizeInput.dispatchEvent(new Event('input'))
-    expect(component.pageSize).toBe(1)
-  })
+    pageSizeInput.value = '';
+    pageSizeInput.dispatchEvent(new Event('input'));
+    expect(component.pageSize).toBe(1);
+  });
 });

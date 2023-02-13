@@ -25,5 +25,5 @@ export interface ResponseConvert {
 
 export interface ResponseLatest {
   success: boolean,
-  rates: {}
+  rates: { }
 }

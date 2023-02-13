@@ -1,1 +1,1 @@
-export const mockDisplayColumns = ["Código", "Descrição"]
+export const mockDisplayColumns = ['Código', 'Descrição'];

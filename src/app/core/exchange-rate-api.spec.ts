@@ -21,15 +21,15 @@ describe('ExchangeRateApi', () => {
     });
     exchangeRate = TestBed.inject(ExchangeRateApiService);
     httpTestingController = TestBed.inject(HttpTestingController);
-  })
+  });
 
   afterEach(() => {
     httpTestingController.verify();
-  })
+  });
 
   it('should be created', () => {
     expect(exchangeRate).toBeTruthy();
-  })
+  });
 
   it('Should return Observable with coins', () => {
     const response: ResponseSymbols = responseSymbols;
@@ -42,7 +42,7 @@ describe('ExchangeRateApi', () => {
       expect(r).toEqual(response);
       expect(responseCoins.length).toEqual(coins.length);
       expect(responseCoins).toEqual(coins);
-    })
+    });
 
     const req = httpTestingController.expectOne(`${API}symbols`);
 
@@ -57,37 +57,37 @@ describe('ExchangeRateApi', () => {
     const ConversionURL = `${API}convert?from=USD&to=BRL&amount=300`;
 
     exchangeRate.getConversionCoins('USD', 'BRL', 300)
-    .subscribe((r) => {
-      expect(r).toEqual(response)
+      .subscribe((r) => {
+        expect(r).toEqual(response);
 
-      expect(r.query.from).toEqual(response.query.from)
-      expect(r.query.to).toEqual(response.query.to)
-      expect(r.query.amount).toEqual(response.query.amount)
-      expect(r.info.rate).toEqual(response.info.rate)
-      expect(r.historical).toEqual(response.historical)
-      expect(r.date).toEqual(response.date)
-      expect(r.result).toEqual(response.result)
-    })
+        expect(r.query.from).toEqual(response.query.from);
+        expect(r.query.to).toEqual(response.query.to);
+        expect(r.query.amount).toEqual(response.query.amount);
+        expect(r.info.rate).toEqual(response.info.rate);
+        expect(r.historical).toEqual(response.historical);
+        expect(r.date).toEqual(response.date);
+        expect(r.result).toEqual(response.result);
+      });
 
-    const req = httpTestingController.expectOne(ConversionURL)
+    const req = httpTestingController.expectOne(ConversionURL);
 
-    expect(req.request.method).toEqual('GET')
+    expect(req.request.method).toEqual('GET');
 
-    req.flush(response)
-  })
+    req.flush(response);
+  });
 
   it('should return latest quotes', () => {
     const response: ResponseLatest = responseLatest;
 
     exchangeRate.getLatest().subscribe((r) => {
-      expect(r).toEqual(response)
-      expect(r.rates).toEqual(response.rates)
-    })
+      expect(r).toEqual(response);
+      expect(r.rates).toEqual(response.rates);
+    });
 
-    const req = httpTestingController.expectOne(`${API}latest`)
+    const req = httpTestingController.expectOne(`${API}latest`);
 
-    expect(req.request.method).toEqual('GET')
+    expect(req.request.method).toEqual('GET');
 
-    req.flush(response)
-  })
-})
+    req.flush(response);
+  });
+});

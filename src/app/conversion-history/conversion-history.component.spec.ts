@@ -8,7 +8,7 @@ import { SessionStorageService } from '../core/session-storage.service';
 import { ConversionHistoryComponent } from './conversion-history.component';
 import { mockHistoric, SessionStorageServiceStumb } from './conversion-history.component.doubles';
 
-const mockDisplayColumns = ["Data", "Hora", "Quantidade", "Moeda de origem", "Moeda de destino", "Resultado", "Taxa"]
+const mockDisplayColumns = ['Data', 'Hora', 'Quantidade', 'Moeda de origem', 'Moeda de destino', 'Resultado', 'Taxa'];
 
 describe('ConversionHistoryComponent', () => {
   let component: ConversionHistoryComponent;
@@ -30,7 +30,7 @@ describe('ConversionHistoryComponent', () => {
         { provide: MatDialog, useVale: mockMatDialog }
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ConversionHistoryComponent);
     component = fixture.componentInstance;
@@ -46,7 +46,7 @@ describe('ConversionHistoryComponent', () => {
   it('should check if displayColumns have value', () => {
     expect(component.displayColumns).toBeTruthy();
     expect(component.displayColumns.length).toBe(7);
-  })
+  });
 
   it('should render the table with received data', (done: DoneFn) => {
 
@@ -56,20 +56,20 @@ describe('ConversionHistoryComponent', () => {
       const table: HTMLElement = fixture.nativeElement.querySelector('table');
       expect(table).toBeTruthy();
 
-      const columns: NodeList = table.querySelectorAll('thead th')
+      const columns: NodeList = table.querySelectorAll('thead th');
       columns.forEach((column, index) => {
         expect(column.textContent)
-        .withContext('Should render column')
-        .toContain(mockDisplayColumns[index])
-      })
+          .withContext('Should render column')
+          .toContain(mockDisplayColumns[index]);
+      });
 
-      const rows = table.querySelectorAll('tbody tr')
+      const rows = table.querySelectorAll('tbody tr');
       rows.forEach((rows, i) => {
         const cells = rows.querySelectorAll('.conversion-data');
 
         const [ date, hourAndMinutes, amount, originCoin, destinationCoin, result, rate ] = [
           cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6]
-        ]
+        ];
 
         const [dayMock, monthMock, yearMock] = mockHistoric[i].date.split('/');
         const dateMock = monthMock+'/'+dayMock+'/'+yearMock;
@@ -81,10 +81,10 @@ describe('ConversionHistoryComponent', () => {
         expect(destinationCoin.textContent).toContain(mockHistoric[i].destinationCoin);
         expect(result.textContent).toContain(mockHistoric[i].result.toString());
         expect(rate.textContent).toContain(mockHistoric[i].rate.toString());
-      })
+      });
 
       done();
-    })
+    });
   });
 
   it('should not render table when array is empty and show alternative message', () => {
@@ -94,7 +94,7 @@ describe('ConversionHistoryComponent', () => {
     const noHistoric: HTMLElement = fixture.nativeElement.querySelector('.no-historic');
 
     expect(noHistoric.textContent)
-    .toContain('não realizou nenhuma conversão');
+      .toContain('não realizou nenhuma conversão');
   });
 
   it ('should open dialog when button is clicked', (done: DoneFn) => {
@@ -102,7 +102,7 @@ describe('ConversionHistoryComponent', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       spyOn(component, 'openDialog');
-      const button: HTMLElement = fixture.nativeElement.querySelector('button')
+      const button: HTMLElement = fixture.nativeElement.querySelector('button');
       button.click();
 
       fixture.detectChanges();
@@ -110,8 +110,8 @@ describe('ConversionHistoryComponent', () => {
       expect(component.openDialog).toHaveBeenCalledWith(0);
 
       done();
-    })
-  })
+    });
+  });
 
   it ('Should deleteHistoric called with a value', () => {
     spyOn(component, 'deleteHistoric').and.callThrough();
@@ -120,5 +120,5 @@ describe('ConversionHistoryComponent', () => {
 
     expect(component.deleteHistoric).toHaveBeenCalled();
     expect(component.deleteHistoric).toHaveBeenCalledWith(0);
-  })
+  });
 });

@@ -23,16 +23,16 @@ export class DataRequestsService {
         const observer = coins;
 
         this.exchangeRate.getCoins()
-        .pipe(
-          take(1),
-          map(response => Object.values(response.symbols as Coin[]))
-        ).subscribe((coins) => {
-          this.CoinSymbols = coins
-          observer.next(this.CoinSymbols);
-          observer.complete();
-        })
+          .pipe(
+            take(1),
+            map(response => Object.values(response.symbols as Coin[]))
+          ).subscribe((coins) => {
+            this.CoinSymbols = coins;
+            observer.next(this.CoinSymbols);
+            observer.complete();
+          });
       }
-    })
+    });
   }
 
   getValidCoinsForConversion() {
@@ -43,15 +43,15 @@ export class DataRequestsService {
         take(1)
       ).subscribe((coins) => {
 
-        const symbols = observer
+        const symbols = observer;
         this.exchangeRate.getLatest().pipe(
           take(1),
           map(response => Object.keys(response.rates as string[]))
         ).subscribe((codeCoins) => {
-          symbols.next(coins.filter(c => codeCoins.includes(c.code)))
-        })
+          symbols.next(coins.filter(c => codeCoins.includes(c.code)));
+        });
 
-      })
-    })
+      });
+    });
   }
 }
