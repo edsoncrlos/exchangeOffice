@@ -4,31 +4,41 @@
     <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> Data </th>
-        <td mat-cell *matCellDef="let historic"> {{ historic.date | date:'dd/MM/yyyy' }} </td>
+        <td mat-cell *matCellDef="let historic">
+          <span class="conversion-data"> {{ historic.date | date:'dd/MM/yyyy' }} </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="hourAndMinutes">
         <th mat-header-cell *matHeaderCellDef
           mat-sort-header sortActionDescription="Sort by hourAndMinutes"
         > Hora </th>
-        <td mat-cell *matCellDef="let historic">{{ historic.hourAndMinutes }}</td>
+        <td mat-cell *matCellDef="let historic">
+          <span class="conversion-data"> {{ historic.hourAndMinutes }} </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef
           mat-sort-header sortActionDescription="Sort by amount"
         > Quantidade </th>
-        <td mat-cell *matCellDef="let historic">{{ historic.amount }}</td>
+        <td mat-cell *matCellDef="let historic">
+          <span class="conversion-data"> {{ historic.amount }} </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="originCoin">
         <th mat-header-cell *matHeaderCellDef> Moeda de origem </th>
-        <td mat-cell *matCellDef="let historic"> {{ historic.originCoin }} </td>
+        <td mat-cell *matCellDef="let historic">
+          <span class="conversion-data"> {{ historic.originCoin }} </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="destinationCoin">
         <th mat-header-cell *matHeaderCellDef> Moeda de destino </th>
-        <td mat-cell *matCellDef="let historic"> {{ historic.destinationCoin }} </td>
+        <td mat-cell *matCellDef="let historic">
+          <span class="conversion-data"> {{ historic.destinationCoin }} </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="result">
@@ -37,7 +47,7 @@
         > Resultado </th>
         <td mat-cell *matCellDef="let historic">
           <div class="container-icons">
-            <span class="result-value">{{ historic.result }}</span>
+            <span class="result-value conversion-data"> {{ historic.result }} </span>
             <mat-icon *ngIf="historic.hasShowIcon" class="money-icon" aria-hidden="false" aria-label="Ícone representando uma nota de dinheiro" fontIcon="payments"></mat-icon>
           </div>
         </td>
@@ -47,7 +57,7 @@
         <th mat-header-cell *matHeaderCellDef> Taxa </th>
         <td mat-cell *matCellDef="let historic">
           <div class="container-icons">
-            <span>{{ historic.rate }}</span>
+            <span class="conversion-data"> {{ historic.rate }} </span>
             <button type="button" (click)="openDialog(historic.id)">
               <mat-icon class="text-danger" aria-hidden="false" aria-label="Ícone representando uma nota de dinheiro" fontIcon="delete"></mat-icon>
             </button>
