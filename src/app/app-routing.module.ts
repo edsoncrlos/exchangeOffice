@@ -7,10 +7,11 @@ import { ConversionHistoryComponent } from './conversion-history/conversion-hist
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'coin-listing', component: CoinListingComponent},
   { path: 'coin-converter', component: CoinConverterComponent},
-  { path: 'conversion-history', component: ConversionHistoryComponent}
+  { path: 'conversion-history', component: ConversionHistoryComponent},
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
