@@ -1,7 +1,22 @@
 import { Observable } from "rxjs";
 
-import { ResponseSymbols } from "./exchange-rate-api.interfaces";
+import { Coin, ResponseLatest, ResponseSymbols } from "./exchange-rate-api.interfaces";
 import { ExchangeRateApiService } from "./exchange-rate-api.service";
+
+
+export const mockCoins: Coin[] = [
+  {
+    code: 'USD',
+    description: 'United States Dollar'
+  },
+  {
+    code: 'BRL',
+    description: 'Brazilian Real'
+  }
+]
+
+export const mockLatestCoins = [mockCoins[0]];
+
 
 export const ExchangeRateServiceStumb: Partial<ExchangeRateApiService> = {
   getCoins() {
@@ -18,6 +33,21 @@ export const ExchangeRateServiceStumb: Partial<ExchangeRateApiService> = {
         }
       }
     }
+
+    return new Observable((observer) => {
+      observer.next(response);
+      observer.complete();
+    })
+  },
+
+  getLatest() {
+    const response: ResponseLatest = {
+      success: true,
+      rates: {
+        'USD': 1.06695,
+      }
+    }
+
     return new Observable((observer) => {
       observer.next(response);
       observer.complete();
