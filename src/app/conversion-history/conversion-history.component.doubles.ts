@@ -1,6 +1,8 @@
 import { SessionStorageService } from '../core/session-storage.service';
 import { Historic } from './conversion-history.interfaces';
 
+export const mockDisplayColumns = ['Data', 'Hora', 'Quantidade', 'Moeda de origem', 'Moeda de destino', 'Resultado', 'Taxa'];
+
 export const mockHistoric: Historic[] = [
   {
     date: '11/06/2022',
@@ -34,7 +36,7 @@ export const mockHistoric: Historic[] = [
   }
 ];
 
-export const SessionStorageServiceStumb: Partial<SessionStorageService<Historic>> = {
+export const SessionStorageServiceStub: Partial<SessionStorageService<Historic>> = {
   getItem(key: string) {
     return [{
       date: '11/06/2022',

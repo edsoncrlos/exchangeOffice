@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { forkJoin, map, Observable } from 'rxjs';
 
 
-import { ExchangeRateServiceStumb, mockCoins, mockLatestCoins } from '../core/exchange-rate-api.service.doubles';
+import { ExchangeRateServiceStub, mockCoins, mockLatestCoins } from '../core/exchange-rate-api.service.doubles';
 import { DataRequestsService } from './data-requests.service';
 import { Coin } from './exchange-rate-api.interfaces';
 import { ExchangeRateApiService } from './exchange-rate-api.service';
@@ -34,27 +34,27 @@ describe('DataRequestsService', () => {
   });
 
   it('should return ResponseSymbols from exchangeRate as Observable of coins', () => {
-    const stumbValue = ExchangeRateServiceStumb?.getCoins?.()!;
-    const returnStumb = new Observable<Coin[]>((coins) => {
+    const stubValue = ExchangeRateServiceStub?.getCoins?.()!;
+    const returnStub = new Observable<Coin[]>((coins) => {
       coins.next(mockCoins);
       coins.complete();
     });
 
-    exchangeRateSpy.getCoins.and.returnValue(stumbValue);
+    exchangeRateSpy.getCoins.and.returnValue(stubValue);
     const returnService = service.getCoins();
     expect(service.CoinSymbols).toBeUndefined();
 
     forkJoin({
       returnService,
-      returnStumb
+      returnStub
     }).pipe(
-      map((Returns: {returnService: Coin[], returnStumb: Coin[]}) => Returns)
+      map((Returns: {returnService: Coin[], returnStub: Coin[]}) => Returns)
     ).subscribe(Returns => {
-      expect(Returns.returnService.length).toBe(Returns.returnStumb.length);
+      expect(Returns.returnService.length).toBe(Returns.returnStub.length);
 
       expect(Returns.returnService)
         .withContext('service returned stub value')
-        .toEqual(Returns.returnStumb);
+        .toEqual(Returns.returnStub);
     });
 
     expect(service.CoinSymbols).toBeDefined();
@@ -65,33 +65,33 @@ describe('DataRequestsService', () => {
       .toBe(1);
 
     expect(exchangeRateSpy.getCoins.calls.mostRecent().returnValue)
-      .toBe(stumbValue);
+      .toBe(stubValue);
   });
 
   it('should only return coins that exist getLatest', () => {
-    const stumbValue = ExchangeRateServiceStumb?.getLatest?.()!;
-    const stumbValueSymbols = ExchangeRateServiceStumb?.getCoins?.()!;
+    const stubValue = ExchangeRateServiceStub?.getLatest?.()!;
+    const stubValueSymbols = ExchangeRateServiceStub?.getCoins?.()!;
 
-    const returnLatestStumb = new Observable<Coin[]>((coins) => {
+    const returnLatestStub = new Observable<Coin[]>((coins) => {
       coins.next(mockLatestCoins);
       coins.complete();
     });
 
-    exchangeRateSpy.getCoins.and.returnValue(stumbValueSymbols);
-    exchangeRateSpy.getLatest.and.returnValue(stumbValue);
+    exchangeRateSpy.getCoins.and.returnValue(stubValueSymbols);
+    exchangeRateSpy.getLatest.and.returnValue(stubValue);
     const returnLatest = service.getValidCoinsForConversion();
 
     forkJoin({
       returnLatest,
-      returnLatestStumb
+      returnLatestStub
     }).pipe(
-      map((Returns: {returnLatest: Coin[], returnLatestStumb: Coin[]}) => Returns)
+      map((Returns: {returnLatest: Coin[], returnLatestStub: Coin[]}) => Returns)
     ).subscribe(Returns => {
-      expect(Returns.returnLatest.length).toBe(Returns.returnLatestStumb.length);
+      expect(Returns.returnLatest.length).toBe(Returns.returnLatestStub.length);
 
       expect(Returns.returnLatest)
         .withContext('service returned stub value')
-        .toEqual(Returns.returnLatestStumb);
+        .toEqual(Returns.returnLatestStub);
     });
 
     expect(exchangeRateSpy.getLatest.calls.count())
@@ -99,13 +99,13 @@ describe('DataRequestsService', () => {
       .toBe(1);
 
     expect(exchangeRateSpy.getLatest.calls.mostRecent().returnValue)
-      .toBe(stumbValue);
+      .toBe(stubValue);
 
     expect(exchangeRateSpy.getCoins.calls.count())
       .withContext('Spy method was called once')
       .toBe(1);
 
     expect(exchangeRateSpy.getCoins.calls.mostRecent().returnValue)
-      .toBe(stumbValueSymbols);
+      .toBe(stubValueSymbols);
   });
 });

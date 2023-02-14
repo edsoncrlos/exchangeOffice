@@ -6,9 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { SessionStorageService } from '../core/session-storage.service';
 
 import { ConversionHistoryComponent } from './conversion-history.component';
-import { mockHistoric, SessionStorageServiceStumb } from './conversion-history.component.doubles';
-
-const mockDisplayColumns = ['Data', 'Hora', 'Quantidade', 'Moeda de origem', 'Moeda de destino', 'Resultado', 'Taxa'];
+import { mockDisplayColumns, mockHistoric, SessionStorageServiceStub } from './conversion-history.component.doubles';
 
 describe('ConversionHistoryComponent', () => {
   let component: ConversionHistoryComponent;
@@ -26,7 +24,7 @@ describe('ConversionHistoryComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: SessionStorageService, useValue: SessionStorageServiceStumb },
+        { provide: SessionStorageService, useValue: SessionStorageServiceStub },
         { provide: MatDialog, useVale: mockMatDialog }
       ]
     })

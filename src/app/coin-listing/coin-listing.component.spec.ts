@@ -7,7 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
 import { CoinListingComponent } from './coin-listing.component';
 import { mockDisplayColumns } from './coin-listing.component.doubles';
-import { ExchangeRateServiceStumb, mockCoins } from '../core/exchange-rate-api.service.doubles';
+import { ExchangeRateServiceStub, mockCoins } from '../core/exchange-rate-api.service.doubles';
 
 describe('CoinListingComponent', () => {
   let component: CoinListingComponent;
@@ -22,7 +22,7 @@ describe('CoinListingComponent', () => {
         MatTableModule
       ],
       providers: [
-        { provide: ExchangeRateApiService, useValue: ExchangeRateServiceStumb }
+        { provide: ExchangeRateApiService, useValue: ExchangeRateServiceStub }
       ]
     })
       .compileComponents();

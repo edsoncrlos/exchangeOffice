@@ -49,7 +49,7 @@ export const responseLatest: ResponseLatest = {
   }
 };
 
-export const ExchangeRateServiceStumb: Partial<ExchangeRateApiService> = {
+export const ExchangeRateServiceStub: Partial<ExchangeRateApiService> = {
   getCoins() {
     return new Observable((observer) => {
       observer.next(responseSymbols);
