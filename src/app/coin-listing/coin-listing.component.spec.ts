@@ -70,7 +70,7 @@ describe('CoinListingComponent', () => {
     });
   });
 
-  it('should not reder table when array is empty', () => {
+  it('should not render table when array is empty', () => {
     component.dataSource.data = [];
 
     fixture.detectChanges();
