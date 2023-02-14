@@ -18,3 +18,7 @@ Application that converts monetary values using the exchagerate [API](https://ex
 `npm run lint` to view errors
 
 `npm run lint-fix` to fix errors
+
+## Tests
+
+`npm run test`
