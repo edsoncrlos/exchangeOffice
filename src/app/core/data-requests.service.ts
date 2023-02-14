@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, take } from 'rxjs';
+import { forkJoin, map, Observable, take } from 'rxjs';
 import { Coin } from './exchange-rate-api.interfaces';
 import { ExchangeRateApiService } from './exchange-rate-api.service';
 
@@ -16,7 +16,6 @@ export class DataRequestsService {
   getCoins() {
     return new Observable<Coin[]>((coins) => {
       if (this.CoinSymbols != undefined) {
-
         coins.next(this.CoinSymbols);
         coins.complete();
       } else {
@@ -36,21 +35,15 @@ export class DataRequestsService {
   }
 
   getValidCoinsForConversion() {
-
     return new Observable<Coin[]>((coins) => {
-      const observer = coins;
-      this.getCoins().pipe(
-        take(1)
-      ).subscribe((coins) => {
+      forkJoin({
+        coins$: this.getCoins(),
+        latest$: this.exchangeRate.getLatest()
+      }).subscribe(result => {
+        const latestCodes = Object.keys(result.latest$.rates);
 
-        const symbols = observer;
-        this.exchangeRate.getLatest().pipe(
-          take(1),
-          map(response => Object.keys(response.rates as string[]))
-        ).subscribe((codeCoins) => {
-          symbols.next(coins.filter(c => codeCoins.includes(c.code)));
-        });
-
+        coins.next(result.coins$.filter(c => latestCodes.includes(c.code)));
+        coins.complete();
       });
     });
   }
