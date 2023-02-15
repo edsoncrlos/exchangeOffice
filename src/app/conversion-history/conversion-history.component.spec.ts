@@ -85,6 +85,27 @@ describe('ConversionHistoryComponent', () => {
     });
   });
 
+  it ('should show icons of money for conversion when hasShowIcon is true', (done: DoneFn) => {
+
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+
+      const rows: NodeListOf<Element> = fixture.nativeElement.querySelectorAll('table tbody tr');
+
+      rows.forEach((cell, i) => {
+        const icon = cell.querySelector('.money-icon');
+
+        if (mockHistoric[i].hasShowIcon) {
+          expect(icon).toBeDefined();
+        } else {
+          expect(icon).toBeNull();
+        }
+      })
+
+      done();
+    });
+  });
+
   it('should not render table when array is empty and show alternative message', () => {
     component.dataSource.data = [];
     fixture.detectChanges();
