@@ -12,6 +12,7 @@ import { CoinConverterComponent } from './coin-converter/coin-converter.componen
 import { CoinListingComponent } from './coin-listing/coin-listing.component';
 import { ConversionHistoryComponent } from './conversion-history/conversion-history.component';
 import { HomeComponent } from './home/home.component';
+import { InputAutocompleteComponent } from './coin-converter/input-autocomplete/input-autocomplete.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HomeComponent } from './home/home.component';
     HomeComponent,
     CoinListingComponent,
     CoinConverterComponent,
-    ConversionHistoryComponent
+    ConversionHistoryComponent,
+    InputAutocompleteComponent
   ],
   imports: [
     BrowserModule,

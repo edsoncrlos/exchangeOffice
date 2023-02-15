@@ -1,0 +1,23 @@
+<label #label [for]="inputName" class="form-label">
+  <ng-content></ng-content>
+</label>
+<input type="text" class="form-control" [id]="inputName" [placeholder]="placeholder"
+  [name]="inputName"
+  [ariaLabel]="label.innerHTML"
+  required
+  [class.is-invalid]="!Coin.valid && Coin.touched"
+  [matAutocomplete]="autoCompleteCoin"
+  [(ngModel)]="form"
+  (ngModelChange)="changeInputValue()"
+  #Coin="ngModel"
+>
+<div *ngIf="!Coin.valid && Coin.touched"
+  class="alert alert-danger">
+  Esse campo é obrigatório
+</div>
+
+<mat-autocomplete #autoCompleteCoin="matAutocomplete">
+  <mat-option *ngFor="let option of coins" [value]="option.description" >
+    {{ option.description }}
+  </mat-option>
+</mat-autocomplete>
