@@ -131,8 +131,12 @@ export class CoinConverterComponent implements OnInit {
       const codeDollar = 'USD';
       let isGreaterThanTenThousandDollars = false;
 
-      if (conversion.query.to === codeDollar && conversion.result > tenThousand) {
-        isGreaterThanTenThousandDollars = true;
+      const conversionToDollar = conversion.query.to === codeDollar;
+      const conversionFromDollar = conversion.query.from === codeDollar;
+      if (conversionToDollar || conversionFromDollar) {
+        if ((conversionToDollar && conversion.result > tenThousand) || (conversionFromDollar && conversion.query.amount > tenThousand)) {
+          isGreaterThanTenThousandDollars = true;
+        }
         this.addHistoricInSessionStorage(conversion, isGreaterThanTenThousandDollars);
       } else {
         this.exchangeRate.getConversionCoins(conversion.query.to, codeDollar, conversion.result)
