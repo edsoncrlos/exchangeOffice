@@ -7,7 +7,7 @@
   required
   [class.is-invalid]="!Coin.valid && Coin.touched"
   [matAutocomplete]="autoCompleteCoin"
-  [(ngModel)]="form"
+  [(ngModel)]="inputValue"
   (ngModelChange)="changeInputValue()"
   #Coin="ngModel"
 >

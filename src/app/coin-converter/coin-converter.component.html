@@ -5,7 +5,7 @@
       [inputName]="'originCoin'"
       [placeholder]="'Brazilian Real - BRL'"
       [coins]="applyFilter(coinsConverterForm.originCoin)"
-      [(form)]="coinsConverterForm.originCoin"
+      [(inputValue)]="coinsConverterForm.originCoin"
     >Moeda de origem</app-input-autocomplete>
   </div>
 
@@ -14,7 +14,7 @@
       [inputName]="'destinationCoin'"
       [placeholder]="'United States Dollar - USD'"
       [coins]="applyFilter(coinsConverterForm.destinationCoin)"
-      [(form)]="coinsConverterForm.destinationCoin"
+      [(inputValue)]="coinsConverterForm.destinationCoin"
     >Moeda de destino</app-input-autocomplete>
   </div>
 

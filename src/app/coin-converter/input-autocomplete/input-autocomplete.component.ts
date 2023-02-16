@@ -11,11 +11,11 @@ export class InputAutocompleteComponent {
   @Input() placeholder!: string;
   @Input() coins!: CodeAndDescription[];
 
-  @Input() form!: string;
-  @Output() formChange = new EventEmitter<string>();
+  @Input() inputValue!: string;
+  @Output() inputValueChange = new EventEmitter<string>();
 
 
   changeInputValue() {
-    this.formChange.emit(this.form);
+    this.inputValueChange.emit(this.inputValue);
   }
 }
