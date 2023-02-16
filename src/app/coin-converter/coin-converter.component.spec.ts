@@ -1,18 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ExchangeRateServiceStub, mockResponsesConvert } from '../core/exchange-rate-api.service.doubles';
-
 import { FormsModule } from '@angular/forms';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+import { Historic } from '../conversion-history/conversion-history.interfaces';
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
+import { ExchangeRateServiceStub, mockResponsesConvert } from '../core/exchange-rate-api.service.doubles';
+import { SessionStorageService } from '../core/session-storage.service';
 import { CoinConverterComponent } from './coin-converter.component';
 import { InputAutocompleteComponent } from './input-autocomplete/input-autocomplete.component';
 
 describe('CoinConverterComponent', () => {
   let component: CoinConverterComponent;
   let fixture: ComponentFixture<CoinConverterComponent>;
+  let sessionStorageSpy: jasmine.SpyObj<SessionStorageService<Historic>>;
 
   beforeEach(async () => {
+    const mockSessionStorage = jasmine.createSpyObj<SessionStorageService<Historic>>('SessionStorage', [ 'addItem']);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -24,7 +28,8 @@ describe('CoinConverterComponent', () => {
         FormsModule
       ],
       providers: [
-        { provide: ExchangeRateApiService, useValue: ExchangeRateServiceStub}
+        { provide: ExchangeRateApiService, useValue: ExchangeRateServiceStub},
+        { provide: SessionStorageService, useValue: mockSessionStorage }
       ]
     })
       .compileComponents();
@@ -32,7 +37,7 @@ describe('CoinConverterComponent', () => {
     fixture = TestBed.createComponent(CoinConverterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
+    sessionStorageSpy = TestBed.inject(SessionStorageService) as jasmine.SpyObj<SessionStorageService<Historic>>;
   });
 
   it('should create', () => {
@@ -99,4 +104,28 @@ describe('CoinConverterComponent', () => {
     });
   });
 
+  it('should call service sessionStorage.addItem with correct parameters', () => {
+    const response = mockResponsesConvert[0];
+    const hasShowIcon = false;
+    const hourAndMinutes = '10:10';
+    spyOn(component, 'addHistoricInSessionStorage').and.callThrough();
+    spyOn(component, 'getHourAndMinutes').and.returnValue(hourAndMinutes);
+
+    component.addHistoricInSessionStorage(response, hasShowIcon);
+
+    expect(component.addHistoricInSessionStorage).toHaveBeenCalled();
+    expect(component.addHistoricInSessionStorage).toHaveBeenCalledWith(response, hasShowIcon);
+    expect(sessionStorageSpy.addItem.calls.count()).toBe(1);
+
+    const [key, historic] = sessionStorageSpy.addItem.calls.argsFor(0);
+    expect(key).toBe('historic');
+    expect(historic.date).toBe(response.date);
+    expect(historic.originCoin).toBe(response.query.from);
+    expect(historic.destinationCoin).toBe(response.query.to);
+    expect(historic.amount).toBe(response.query.amount);
+    expect(historic.rate).toBe(response.info.rate);
+    expect(historic.result).toBe(response.result);
+    expect(historic.hasShowIcon).toBe(hasShowIcon);
+    expect(historic.hourAndMinutes).toBe(hourAndMinutes);
+  });
 });

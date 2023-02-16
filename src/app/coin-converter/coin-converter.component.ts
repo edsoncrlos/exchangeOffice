@@ -153,8 +153,12 @@ export class CoinConverterComponent implements OnInit {
     });
   }
 
+  getHourAndMinutes() {
+    return Date().match(/\d\d:\d\d/)?.[0] as string;
+  }
+
   addHistoricInSessionStorage(conversion: ResponseConvert, isGreaterThanTenThousandDollars: boolean) {
-    const hourAndMinutes =  Date().match(/\d\d:\d\d/)?.[0] as string;
+    const hourAndMinutes = this.getHourAndMinutes();
 
     const historic: Historic = {
       date: conversion.date,
