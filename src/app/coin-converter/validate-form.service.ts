@@ -10,8 +10,8 @@ export class ValidateFormService {
   constructor() { }
 
   getCodeCoin(coin: string) {
-    const length = coin.length;
-    return coin.trim().substring(length-3, length).toUpperCase();
+    const length = coin.trimEnd().length;
+    return coin.substring(length-3, length).toUpperCase();
   }
 
   isCodeValid(code: string) {
