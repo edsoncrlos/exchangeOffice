@@ -8,6 +8,7 @@ import { ResponseConvert } from '../core/exchange-rate-api.interfaces';
 import { ExchangeRateApiService } from '../core/exchange-rate-api.service';
 import { SessionStorageService } from '../core/session-storage.service';
 import { CodeAndDescription, CoinsConvertForm } from './coin-converter.interfaces';
+import { ValidateFormService } from './validate-form.service';
 
 @Component({
   selector: 'app-coin-converter',
@@ -24,9 +25,7 @@ export class CoinConverterComponent implements OnInit {
     destinationCoin: '',
     amount: 1
   };
-  originCode = '';
-  destinationCode = '';
-  amount = 0;
+
   showResult = false;
   isCodesIncorrect = false;
   isLoading = false;
@@ -34,7 +33,8 @@ export class CoinConverterComponent implements OnInit {
   constructor (
     private exchangeRate: ExchangeRateApiService,
     private sessionStorage: SessionStorageService<Historic>,
-    private dataRequest: DataRequestsService
+    private dataRequest: DataRequestsService,
+    private validateForm: ValidateFormService
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +46,7 @@ export class CoinConverterComponent implements OnInit {
             description: `${c.description} - ${c.code}`
           };
         });
+        this.validateForm.codeAndDescriptionCoin = this.codeAndDescriptionCoin;
       });
   }
 
@@ -58,39 +59,6 @@ export class CoinConverterComponent implements OnInit {
     return this.codeAndDescriptionCoin.filter(coin => coin.description.toUpperCase().indexOf(filter) != -1);
   }
 
-  getCodeCoin(coin: string) {
-    const length = coin.length;
-    return coin.trim().substring(length-3, length).toUpperCase();
-  }
-
-  isCodeValid(code: string) {
-    if (this.codeAndDescriptionCoin.find(c => c.code === code) != undefined) {
-      return true;
-    }
-    return false;
-  }
-
-  validateCodes(originCoin: string, destinationCoin: string) {
-
-    if (this.isCodeValid(originCoin) && this.isCodeValid(destinationCoin)) {
-      if (originCoin !== destinationCoin) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  validate() {
-    const originCode = this.getCodeCoin(this.coinsConverterForm.originCoin);
-    const destinationCode = this.getCodeCoin(this.coinsConverterForm.destinationCoin);
-    const amount = this.coinsConverterForm.amount;
-
-    const isValidCodes = this.validateCodes(originCode, destinationCode);
-    const isNumberPositive = amount > 0;
-
-    return isValidCodes && isNumberPositive;
-  }
-
   messageErrorAmount(): string {
     if (this.coinsConverterForm.amount != null) {
       if (this.coinsConverterForm.amount <= 0) {
@@ -101,12 +69,9 @@ export class CoinConverterComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.validate()) {
-      this.originCode = this.getCodeCoin(this.coinsConverterForm.originCoin);
-      this.destinationCode = this.getCodeCoin(this.coinsConverterForm.destinationCoin);
-      this.amount = this.coinsConverterForm.amount;
-      this.isCodesIncorrect = false;
+    if (this.validateForm.validate(this.coinsConverterForm)) {
 
+      this.isCodesIncorrect = false;
       this.isLoading = true;
 
       this.convertCoins();
@@ -116,7 +81,18 @@ export class CoinConverterComponent implements OnInit {
   }
 
   convertCoins() {
-    this.conversion$ = this.exchangeRate.getConversionCoins(this.originCode, this.destinationCode, this.amount);
+    const originCode = this.validateForm.getCodeCoin(
+      this.coinsConverterForm.originCoin
+    );
+    const destinationCode = this.validateForm.getCodeCoin(
+      this.coinsConverterForm.destinationCoin
+    );
+    const amount = this.coinsConverterForm.amount;
+
+    this.conversion$ = this.exchangeRate.getConversionCoins(
+      originCode, destinationCode, amount
+    );
+
     this.showResult = true;
     this.addConversion();
   }

@@ -48,10 +48,10 @@
   <div *ngIf="conversion$ | async as conversion" class="card-body conversion m-3">
     <h2 class="card-title">Conversão</h2>
     <p class="badge bg-primary">
-      {{ amount }} {{ originCode }}
+      {{ conversion.query.amount }} {{ conversion.query.from }}
     </p>
     <p>equivalem a</p>
-    <p class="badge bg-primary">{{ conversion.result }} {{ destinationCode }}</p>
+    <p class="badge bg-primary">{{ conversion.result }} {{ conversion.query.to }}</p>
     <p>
       Taxa de conversão:
       <span class="badge bg-primary">{{ conversion.info.rate }}</span>
@@ -59,4 +59,3 @@
     <button class="btn btn-warning" (click)="showResult = false">Fechar</button>
   </div>
 </div>
-
