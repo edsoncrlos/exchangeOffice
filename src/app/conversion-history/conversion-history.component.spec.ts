@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { of } from 'rxjs';
 import { SessionStorageService } from '../core/session-storage.service';
 
 import { ConversionHistoryComponent } from './conversion-history.component';
@@ -11,10 +12,10 @@ import { mockDisplayColumns, mockHistoric, SessionStorageServiceStub } from './c
 describe('ConversionHistoryComponent', () => {
   let component: ConversionHistoryComponent;
   let fixture: ComponentFixture<ConversionHistoryComponent>;
-  let matDialogSpy: jasmine.SpyObj<MatDialog>;
+  let dialogRefSpyObj = jasmine.createSpyObj({ afterClosed : of(true), close: null });
+  dialogRefSpyObj.componentInstance = { body: '' };
 
   beforeEach(async () => {
-    const mockMatDialog = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
       declarations: [ ConversionHistoryComponent ],
@@ -25,7 +26,6 @@ describe('ConversionHistoryComponent', () => {
       ],
       providers: [
         { provide: SessionStorageService, useValue: SessionStorageServiceStub },
-        { provide: MatDialog, useVale: mockMatDialog }
       ]
     })
       .compileComponents();
@@ -33,8 +33,6 @@ describe('ConversionHistoryComponent', () => {
     fixture = TestBed.createComponent(ConversionHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
-    matDialogSpy = TestBed.inject(MatDialog) as jasmine.SpyObj<MatDialog>;
   });
 
   it('should create', () => {
@@ -100,7 +98,7 @@ describe('ConversionHistoryComponent', () => {
         } else {
           expect(icon).toBeNull();
         }
-      })
+      });
 
       done();
     });
@@ -116,28 +114,51 @@ describe('ConversionHistoryComponent', () => {
       .toContain('não realizou nenhuma conversão');
   });
 
-  it ('should open dialog when button is clicked', (done: DoneFn) => {
+  it('should call openDialog functions when button is clicked', (done: DoneFn) => {
 
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-      spyOn(component, 'openDialog');
-      const button: HTMLElement = fixture.nativeElement.querySelector('button');
-      button.click();
+
+      spyOn(component, 'openDialog').and.callThrough();
+      spyOn(component['dialog'], 'open').and.returnValue(dialogRefSpyObj);
+      spyOn(component, 'deleteHistoric');
+
+      const index = 2;
+      const button: NodeListOf<HTMLElement> = fixture.nativeElement.querySelectorAll('button');
+      button[index].click();
 
       fixture.detectChanges();
       expect(component.openDialog).toHaveBeenCalled();
-      expect(component.openDialog).toHaveBeenCalledWith(0);
+      expect(component.openDialog).toHaveBeenCalledWith(index);
+
+      expect(component['dialog'].open).toHaveBeenCalled();
+
+      expect(component.deleteHistoric).toHaveBeenCalled();
+      expect(component.deleteHistoric)
+        .withContext('Should deleteHistoric called with a value of openDialog')
+        .toHaveBeenCalledWith(index);
 
       done();
     });
   });
 
-  it ('Should deleteHistoric called with a value', () => {
+
+  it ('Should delete the Value from table and update it', () => {
+
     spyOn(component, 'deleteHistoric').and.callThrough();
+    spyOn(component['sessionStorage'], 'setItem');
+    const mockAfterDelete = [mockHistoric[0], mockHistoric[2]];
 
-    component.deleteHistoric(0);
+    component.deleteHistoric(1);
+    component.deleteHistoric(3);
 
-    expect(component.deleteHistoric).toHaveBeenCalled();
-    expect(component.deleteHistoric).toHaveBeenCalledWith(0);
-  });
+    expect(component.dataSource.data).not.toEqual(mockHistoric);
+    expect(component.deleteHistoric).toHaveBeenCalledTimes(2);
+    expect(component.dataSource.data)
+      .withContext('should update value of dataSource.data')
+      .toEqual(mockAfterDelete);
+
+    expect(component['sessionStorage'].setItem).toHaveBeenCalledTimes(2);
+    expect(component['sessionStorage'].setItem).toHaveBeenCalledWith('historic', mockAfterDelete);
+  })
 });

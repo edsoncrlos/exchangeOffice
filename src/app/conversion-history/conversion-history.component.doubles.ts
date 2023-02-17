@@ -5,6 +5,7 @@ export const mockDisplayColumns = ['Data', 'Hora', 'Quantidade', 'Moeda de orige
 
 export const mockHistoric: Historic[] = [
   {
+    id: 0,
     date: '02/15/2023',
     hourAndMinutes: '12:03',
     amount: 599,
@@ -15,6 +16,7 @@ export const mockHistoric: Historic[] = [
     hasShowIcon: false
   },
   {
+    id: 1,
     date: '02/15/2023',
     hourAndMinutes: '09:06',
     amount: 60000,
@@ -25,6 +27,7 @@ export const mockHistoric: Historic[] = [
     hasShowIcon: true
   },
   {
+    id: 2,
     date: '02/14/2023',
     hourAndMinutes: '13:03',
     amount: 10000,
@@ -35,6 +38,7 @@ export const mockHistoric: Historic[] = [
     hasShowIcon: false
   },
   {
+    id: 3,
     date: '02/15/2023',
     hourAndMinutes: '13:05',
     amount: 9331.489717,
@@ -49,6 +53,7 @@ export const mockHistoric: Historic[] = [
 export const SessionStorageServiceStub: Partial<SessionStorageService<Historic>> = {
   getItem(key: string) {
     return [{
+      id: 0,
       date: '02/15/2023',
       hourAndMinutes: '12:03',
       amount: 599,
@@ -59,6 +64,7 @@ export const SessionStorageServiceStub: Partial<SessionStorageService<Historic>>
       hasShowIcon: false
     },
     {
+      id: 1,
       date: '02/15/2023',
       hourAndMinutes: '09:06',
       amount: 60000,
@@ -69,6 +75,7 @@ export const SessionStorageServiceStub: Partial<SessionStorageService<Historic>>
       hasShowIcon: true
     },
     {
+      id: 2,
       date: '02/14/2023',
       hourAndMinutes: '13:03',
       amount: 10000,
@@ -79,6 +86,7 @@ export const SessionStorageServiceStub: Partial<SessionStorageService<Historic>>
       hasShowIcon: false
     },
     {
+      id: 3,
       date: '02/15/2023',
       hourAndMinutes: '13:05',
       amount: 9331.489717,
